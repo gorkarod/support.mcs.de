@@ -1,24 +1,12 @@
 @use "sass:map";
 
 $colors: (
-        "black": #111,
-        "white": #fff,
-        "silver": #ddd,
-        "gray": #aaa,
-        "aqua": #7fdbff,
-        "blue": #0074d9,
-        "navy": #001f3f,
-        "teal": #39cccc,
-        "green": #2ecc40,
-        "olive": #3d9970,
-        "lime": #01ff70,
-        "yellow": #ffdc00,
-        "orange": #ff851b,
-        "red": #ff4136,
-        "fuchsia": #f012be,
-        "purple": #b10dc9,
-        "maroon": #85144b,
-);
+        "brand": hsl(198 100% 44%),
+        "fond": hsl(228 23% 25%),
+        "gray": hsl(208 19% 74%),
+        "light-gray": hsl(197 24% 94%), 
+        "text": hsl(232 9% 17%)
+        );
 
 $spacings: (
         "auto": auto,

@@ -1,0 +1,22 @@
+@use 'config' as config;
+@use 'sass:map';
+@use 'sass:color';
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        color-scheme: light;
+        --bg: #{map.get(config.$colors, 'white')};
+        --accent-bg: #{map.get(config.$colors, 'silver')};
+        --text: #{map.get(config.$colors, 'black')};
+        --text-light: #{map.get(config.$colors, 'gray')};
+        --accent: #{map.get(config.$colors, 'purple')};
+        --accent-hover: #{color.scale(map.get(config.$colors, 'purple'), $lightness: 10%)};
+        --accent-text: var(--bg);
+        --border:  #{map.get(config.$colors, 'gray')};
+        --code: #d81b60;
+        --preformatted: #444;
+        --marked: #ffdd33;
+        --disabled: #efefef;
+        --standard-border-radius: 2px;
+    }
+}

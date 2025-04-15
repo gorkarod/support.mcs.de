@@ -1,0 +1,99 @@
+@use "sass:map";
+
+$colors: (
+        "black": #111,
+        "white": #fff,
+        "silver": #ddd,
+        "gray": #aaa,
+        "aqua": #7fdbff,
+        "blue": #0074d9,
+        "navy": #001f3f,
+        "teal": #39cccc,
+        "green": #2ecc40,
+        "olive": #3d9970,
+        "lime": #01ff70,
+        "yellow": #ffdc00,
+        "orange": #ff851b,
+        "red": #ff4136,
+        "fuchsia": #f012be,
+        "purple": #b10dc9,
+        "maroon": #85144b,
+);
+
+$spacings: (
+        "auto": auto,
+        "1": 0.5rem,
+        "2": 1rem,
+        "3": 1.5rem,
+        "4": 2rem,
+        "5": 2.5rem,
+        "6": 3rem,
+        "7": 3.5rem,
+        "8": 4rem,
+        "9": 4.5rem,
+        "10": 5rem,
+);
+
+$tokens: (
+        text: (
+                data: $colors,
+                property: 'color'
+        ),
+        background: (
+                data: $colors,
+                property: 'background-color'
+        ),
+        border: (
+                data: $colors,
+                property: 'border-color'
+        ),
+        fill: (
+                data: $colors,
+                property: 'fill'
+        ),
+        stroke: (
+                data: $colors,
+                property: 'stroke'
+        ),
+        margin: (
+                data: $spacings,
+                property: 'margin'
+        ),
+        margin-top: (
+                data: $spacings,
+                property: 'margin-top'
+        ),
+        margin-right: (
+                data: $spacings,
+                property: 'margin-right'
+        ),
+        margin-bottom: (
+                data: $spacings,
+                property: 'margin-bottom'
+        ),
+        margin-left: (
+                data: $spacings,
+                property: 'margin-left'
+        ),
+        padding: (
+                data: $spacings,
+                property: 'padding'
+        ),
+        padding-top: (
+                data: $spacings,
+                property: 'padding-top'
+        ),
+        padding-right: (
+                data: $spacings,
+                property: 'padding-right'
+        ),
+        padding-bottom: (
+                data: $spacings,
+                property: 'padding-bottom'
+        ),
+        padding-left: (
+                data: $spacings,
+                property: 'padding-left'
+        ),
+
+);

@@ -14,4 +14,19 @@
         font-style: normal;
         font-display: swap;
     }
+    @font-face {
+        font-family: 'CommitMono';
+        src: url('/fonts/commitmono-regular.woff2') format('woff2');
+        font-weight: normal;
+        font-style: normal;
+        font-display: swap;
+    }
+
+    @font-face {
+        font-family: 'Barlow';
+        src: url('/fonts/barlow-regular.woff2') format('woff2');
+        font-weight: normal;
+        font-style: normal;
+        font-display: swap;
+    }
 }

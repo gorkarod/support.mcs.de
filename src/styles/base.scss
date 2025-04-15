@@ -1,17 +1,8 @@
 @use './tokens/config.scss';
 @use './tokens/generator.scss';
-@use './tokens/simple.scss';
 @use './fonts.scss';
+@use 'styles';
 
 @include generator.generate-variables(config.$colors, config.$spacings);
-
 @include fonts.font-face();
-
-.logo {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: var(--color-brand);
-}
-
-
 @include generator.generate-tokens(config.$tokens);

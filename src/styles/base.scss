@@ -1,5 +1,6 @@
-@use 'sass:map';
 @use 'sass:color';
+@use 'sass:list';
+@use 'sass:map';
 @use '../../node_modules/utopia-core-scss/src/utopia' as utopia;
 @use './fonts.scss';
 
@@ -11,10 +12,16 @@ $color-gray: hsl(208 19% 74%);
 $color-light-gray: hsl(197 24% 94%);
 $color-text: hsl(232 9% 17%);
 
+$spacing-clamps: utopia.calculateClamps(("minWidth": 320,
+      "maxWidth": 1024,
+      "pairs": ((4, 8),
+        (8, 16),
+        (16, 32))));
+
 :root {
   --sans-font: "TSTAR", -apple-system, BlinkMacSystemFont, "Avenir Next", Avenir,
-  "Nimbus Sans L", Roboto, "Noto Sans", "Segoe UI", Arial, Helvetica,
-  "Helvetica Neue", sans-serif;
+    "Nimbus Sans L", Roboto, "Noto Sans", "Segoe UI", Arial, Helvetica,
+    "Helvetica Neue", sans-serif;
   --mono-font: Consolas, Menlo, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
   --standard-border-radius: 5px;
 
@@ -30,39 +37,40 @@ $color-text: hsl(232 9% 17%);
   --text-light: #{color.scale($color-text, $lightness: 10%)};
   --border: #{color.scale($color-text, $lightness: 10%)};
   --accent: #{$color-brand};
-  --accent-hover: #{color.scale($color-brand, $lightness: 30%)};;
+  --accent-hover: #{color.scale($color-brand, $lightness: 30%)};
+  ;
   --accent-text: var(--bg);
   --code: #d81b60;
   --preformatted: #444;
   --marked: #ffdd33;
   --disabled: #efefef;
 
-  @include utopia.generateTypeScale((
-          "minWidth": 320,
-          "maxWidth": 1024,
-          "minFontSize": 13,
-          "maxFontSize": 16,
-          "minTypeScale": 1.2,
-          "maxTypeScale": 1.25,
-          "positiveSteps": 5,
-          "negativeSteps": 2,
-          "prefix": "scale-"
-  ));
+  @include utopia.generateTypeScale(("minWidth": 320,
+      "maxWidth": 1024,
+      "minFontSize": 13,
+      "maxFontSize": 16,
+      "minTypeScale": 1.2,
+      "maxTypeScale": 1.25,
+      "positiveSteps": 5,
+      "negativeSteps": 2,
+      "prefix": "scale-"
+    ));
 
-  @include utopia.generateClamps((
-          "minWidth": 320,
-          "maxWidth": 1024,
-          "pairs": (
-                          (4, 8),
-                          (8, 16),
-                          (16, 32),
-          ),
-          "prefix": "spacing-",
-  ))
+  // @each $clamp in $spacing-clamps {
+  //   --spacing-2: #{map.get($clamp, "clamp")};
+  // }
+
+  @for $i from 1 through length($spacing-clamps) {
+    $clamp: nth($spacing-clamps, $i);
+    --spacing-#{$i}: #{map.get($clamp, "clamp")};
+  }
 
 }
 
-*, *::before, *::after {
+
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
@@ -90,11 +98,11 @@ body {
   margin: 0;
 }
 
-body > * {
+body>* {
   grid-column: 2;
 }
 
-body > header > *:only-child {
+body>header>*:only-child {
   margin-block-start: 2rem;
 }
 
@@ -102,7 +110,7 @@ main {
   padding-top: 1.5rem;
 }
 
-body > footer {
+body>footer {
   margin-top: 4rem;
   padding: 2rem 1rem 1.5rem 1rem;
   color: var(--text-light);
@@ -142,7 +150,13 @@ p {
   margin: 1.5rem 0;
 }
 
-p, h1, h2, h3, h4, h5, h6 {
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   overflow-wrap: break-word;
 }
 
@@ -212,11 +226,9 @@ input[type="button"]:enabled:hover {
 
 .button:focus-visible,
 button:focus-visible:where(:enabled),
-input:enabled:focus-visible:where(
-    [type="submit"],
-    [type="reset"],
-    [type="button"]
-  ) {
+input:enabled:focus-visible:where([type="submit"],
+  [type="reset"],
+  [type="button"]) {
   outline: 2px solid var(--accent);
   outline-offset: 1px;
 }
@@ -233,6 +245,7 @@ header nav ol {
   align-items: center;
   gap: 0 1rem;
   width: 100%;
+
   @media (max-width: 48rem) {
     grid-template-columns: auto 1fr;
     grid-auto-rows: auto;
@@ -267,7 +280,9 @@ header nav a[aria-current="true"] {
   cursor: pointer;
 }
 
-article, fieldset, dialog {
+article,
+fieldset,
+dialog {
   border: 1px solid var(--border);
   padding: 1rem;
   border-radius: var(--standard-border-radius);
@@ -284,18 +299,18 @@ section h3:first-child {
 section {
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
-  padding: 2rem 1rem;
+  padding: var(--spacing-3) var(--spacing-2);
   margin: 3rem 0;
 }
 
 /* Don't double separators when chaining sections */
-section + section,
+section+section,
 section:first-child {
   border-top: 0;
   padding-top: 0;
 }
 
-section + section {
+section+section {
   margin-top: 0;
 }
 
@@ -316,15 +331,15 @@ summary {
   word-break: break-all;
 }
 
-details[open] > summary + * {
+details[open]>summary+* {
   margin-top: 0;
 }
 
-details[open] > summary {
+details[open]>summary {
   margin-bottom: 0.5rem;
 }
 
-details[open] > :last-child {
+details[open]> :last-child {
   margin-bottom: 0;
 }
 
@@ -334,7 +349,7 @@ table {
   margin: 1.5rem 0;
 }
 
-figure > table {
+figure>table {
   width: max-content;
   margin: 0;
 }
@@ -396,7 +411,7 @@ textarea:not([cols]) {
 /* Add arrow to drop-down */
 select:not([multiple]) {
   background-image: linear-gradient(45deg, transparent 49%, var(--text) 51%),
-  linear-gradient(135deg, var(--text) 51%, transparent 49%);
+    linear-gradient(135deg, var(--text) 51%, transparent 49%);
   background-position: calc(100% - 15px), calc(100% - 10px);
   background-size: 5px 5px, 5px 5px;
   background-repeat: no-repeat;
@@ -415,8 +430,8 @@ input[type="radio"] {
   width: min-content;
 }
 
-input[type="checkbox"] + label,
-input[type="radio"] + label {
+input[type="checkbox"]+label,
+input[type="radio"]+label {
   display: inline-block;
 }
 
@@ -460,6 +475,7 @@ input[type="radio"]:checked::after {
 
 /* Makes input fields wider on smaller screens */
 @media only screen and (max-width: 720px) {
+
   textarea,
   select,
   input {
@@ -510,8 +526,8 @@ figure {
   overflow-x: auto;
 }
 
-figure > img,
-figure > picture > img {
+figure>img,
+figure>picture>img {
   display: block;
   margin-inline: auto;
 }
@@ -627,7 +643,8 @@ dialog::backdrop {
 
 /* Superscript & Subscript */
 /* Prevent scripts from affecting line-height. */
-sup, sub {
+sup,
+sub {
   vertical-align: baseline;
   position: relative;
 }
@@ -654,42 +671,58 @@ sub {
   @page {
     margin: 1cm;
   }
+
   body {
     display: block;
   }
-  body > header {
+
+  body>header {
     background-color: unset;
   }
-  body > header nav,
-  body > footer {
+
+  body>header nav,
+  body>footer {
     display: none;
   }
+
   article {
     border: none;
     padding: 0;
   }
+
   a[href^="http"]::after {
     content: " <" attr(href) ">";
   }
+
   abbr[title]:after {
     content: " (" attr(title) ")";
   }
+
   a {
     text-decoration: none;
   }
+
   p {
     widows: 3;
     orphans: 3;
   }
+
   hr {
     border-top: 1px solid var(--border);
   }
+
   mark {
     border: 1px solid var(--border);
   }
-  pre, table, figure, img, svg {
+
+  pre,
+  table,
+  figure,
+  img,
+  svg {
     break-inside: avoid;
   }
+
   pre code {
     white-space: pre-wrap;
   }

@@ -1,13 +1,15 @@
 @use 'sass:map';
 @use 'sass:color';
 @use '../../node_modules/utopia-core-scss/src/utopia' as utopia;
-@use './tokens/config.scss';
-@use './tokens/generator.scss';
 @use './fonts.scss';
 
-@include generator.generate-variables(config.$colors, config.$spacings);
-@include generator.generate-tokens(config.$tokens);
 @include fonts.font-face();
+
+$color-brand: hsl(198 100% 44%);
+$color-fond: hsl(228 23% 25%);
+$color-gray: hsl(208 19% 74%);
+$color-light-gray: hsl(197 24% 94%);
+$color-text: hsl(232 9% 17%);
 
 :root {
   --sans-font: "TSTAR", -apple-system, BlinkMacSystemFont, "Avenir Next", Avenir,
@@ -16,13 +18,19 @@
   --mono-font: Consolas, Menlo, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
   --standard-border-radius: 5px;
 
+  --color-brand: #{$color-brand};
+  --color-fond: #{$color-fond};
+  --color-gray: #{$color-gray};
+  --color-light-gray: #{$color-light-gray};
+  --color-text: #{$color-text};
+
   --bg: #fff;
-  --accent-bg: #{map.get(config.$colors, 'gray')};
-  --text: #{map.get(config.$colors, 'text')};
-  --text-light: #{color.scale(map.get(config.$colors, 'text'), $lightness: 10%)};
-  --border: #{color.scale(map.get(config.$colors, 'text'), $lightness: 10%)};
-  --accent: #{map.get(config.$colors, 'brand')};;
-  --accent-hover: #{color.scale(map.get(config.$colors, 'brand'), $lightness: 30%)};;
+  --accent-bg: $color-gray;
+  --text: $color-text;
+  --text-light: #{color.scale($color-text, $lightness: 10%)};
+  --border: #{color.scale($color-text, $lightness: 10%)};
+  --accent: #{$color-brand};
+  --accent-hover: #{color.scale($color-brand, $lightness: 30%)};;
   --accent-text: var(--bg);
   --code: #d81b60;
   --preformatted: #444;
@@ -41,12 +49,16 @@
           "prefix": "scale-"
   ));
 
-  $contentSpacing: utopia.calculateClamp((
+  @include utopia.generateClamps((
           "minWidth": 320,
-          "maxWidth": 768,
-          "minSize": 8,
-          "maxSize": 32,
-  ));
+          "maxWidth": 1024,
+          "pairs": (
+                          (4, 8),
+                          (8, 16),
+                          (16, 32),
+          ),
+          "prefix": "spacing-",
+  ))
 
 }
 

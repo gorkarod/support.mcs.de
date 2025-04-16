@@ -1,6 +1,7 @@
 ---
-import Welcome from '../components/Welcome.md';
+import Card from '../components/Card.astro';
 import Layout from '../layouts/Layout.astro';
+import NicTool from '../assets/nictool.svg?raw';
 ---
 
 <Layout>
@@ -8,7 +9,14 @@ import Layout from '../layouts/Layout.astro';
         <h2>Hier steht was</h2>
     </section>
     <section>
-        <Welcome/>
+        <div class="cards">
+			<Card title="MCS NicTool" url="/willkommen">
+				<div slot="icon">
+                    <Fragment set:html={NicTool} />
+				</div>
+				Verwalten Sie die DNS-Einträge Ihrer Domains. Behalten Sie die Übersicht mit Kommentarfunktion und Historie.
+			</Card>
+		</div>
     </section>
     <section>
         <h2>Und hier auch</h2>

@@ -67,7 +67,6 @@ $spacing-clamps: utopia.calculateClamps(("minWidth": 320,
 
 }
 
-
 *,
 *::before,
 *::after {
@@ -658,6 +657,7 @@ sub {
 }
 
 /* Classes for notices */
+
 .notice {
   background: var(--accent-bg);
   border: 2px solid var(--border);
@@ -666,7 +666,20 @@ sub {
   margin: 2rem 0;
 }
 
-/* Print */
+// ---------------------------------------------------------------------------
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--spacing-2);
+}
+
+// ---------------------------------------------------------------------------
+
+
+
+// Print 
+
 @media print {
   @page {
     margin: 1cm;

@@ -2,6 +2,8 @@
 import Card from '../components/Card.astro';
 import Layout from '../layouts/Layout.astro';
 import NicTool from '../assets/nictool.svg?raw';
+import WebCts from '../assets/webcts.svg?raw';
+import WebMail from '../assets/webmail.svg?raw';
 ---
 
 <Layout>
@@ -15,6 +17,18 @@ import NicTool from '../assets/nictool.svg?raw';
                     <Fragment set:html={NicTool} />
 				</div>
 				Verwalten Sie die DNS-Einträge Ihrer Domains. Behalten Sie die Übersicht mit Kommentarfunktion und Historie.
+			</Card>
+			<Card title="Web-CTS" url="/willkommen">
+				<div slot="icon">
+                    <Fragment set:html={WebCts} />
+				</div>
+				Das MCS Ticketsystem.
+			</Card>
+			<Card title="Web-Mail" url="/willkommen">
+				<div slot="icon">
+                    <Fragment set:html={WebMail} />
+				</div>
+				Greifen Sie auf Ihre Mails zu, wo auch immer Sie sind. Mit dem Webmail-Client von MCS.
 			</Card>
 		</div>
     </section>

@@ -1,0 +1,44 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { getCollection } from "astro:content";
+const domain_dns_articles = await getCollection("domain_dns");
+---
+
+<Layout>
+    <section>
+        <h1>Knowledge Base</h1>
+        
+        
+        
+        <h2>Domains & DNS</h2>
+        <h3>Umzug Ihrer Domain zu MCS</h3>
+        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Similique est nostrum laborum eligendi, vero quibusdam aut ea veritatis impedit non corporis dicta obcaecati nihil recusandae, laboriosam laudantium esse ab incidunt.</p>
+
+        <h3>Wechsel des Domaininhabes</h3>
+        <p>Hier finden Sie zusätzliche Ressourcen und Anleitungen zur Verwaltung Ihrer Domains.</p>
+
+        <h3>Artikel</h3>
+        <ul>
+            {
+                domain_dns_articles.map((article) => (
+                    <li>
+                        <a href={`/blog/${article.id}`}>{article.data.title}</a>
+                    </li>
+                ))
+            }
+        </ul>
+    </section>
+    <article>
+        <slot />
+    </article>
+</Layout>
+
+<style>
+    ul {
+        list-style: none;
+        padding: 0;
+    }
+    li {
+        margin-bottom: 1rem;
+    }
+</style>

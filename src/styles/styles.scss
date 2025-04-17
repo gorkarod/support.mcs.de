@@ -13,15 +13,20 @@ $color-light-gray: hsl(197 24% 94%);
 $color-text: hsl(232 9% 17%);
 
 $spacing-clamps: utopia.calculateClamps(("minWidth": 320,
-      "maxWidth": 1024,
-      "pairs": ((4, 8),
-        (8, 16),
-        (16, 32))));
+        "maxWidth": 1024,
+        "pairs": (
+                        (4, 8),
+                        (8, 16),
+                        (16, 32),
+                        (24, 48),
+                        (32, 64)
+        ))
+);
 
 :root {
   --sans-font: "TSTAR", -apple-system, BlinkMacSystemFont, "Avenir Next", Avenir,
-    "Nimbus Sans L", Roboto, "Noto Sans", "Segoe UI", Arial, Helvetica,
-    "Helvetica Neue", sans-serif;
+  "Nimbus Sans L", Roboto, "Noto Sans", "Segoe UI", Arial, Helvetica,
+  "Helvetica Neue", sans-serif;
   --mono-font: Consolas, Menlo, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
   --standard-border-radius: 5px;
 
@@ -34,34 +39,31 @@ $spacing-clamps: utopia.calculateClamps(("minWidth": 320,
   --bg: #fff;
   --accent-bg: $color-gray;
   --text: $color-text;
-  --text-light: #{color.scale($color-text, $lightness: 10%)};
+  --text-light: #{color.scale($color-text, $lightness: 50%)};
   --border: #{color.scale($color-text, $lightness: 10%)};
   --accent: #{$color-brand};
-  --accent-hover: #{color.scale($color-brand, $lightness: 30%)};
-  ;
+  --accent-hover: #{color.scale($color-brand, $lightness: 30%)};;
   --accent-text: var(--bg);
   --code: #d81b60;
   --preformatted: #444;
   --marked: #ffdd33;
   --disabled: #efefef;
 
-  @include utopia.generateTypeScale(("minWidth": 320,
-      "maxWidth": 1024,
-      "minFontSize": 13,
-      "maxFontSize": 16,
-      "minTypeScale": 1.2,
-      "maxTypeScale": 1.25,
-      "positiveSteps": 5,
-      "negativeSteps": 2,
-      "prefix": "scale-"
-    ));
+  @include utopia.generateTypeScale((
+          "minWidth": 320,
+          "maxWidth": 1024,
+          "minFontSize": 13,
+          "maxFontSize": 16,
+          "minTypeScale": 1.2,
+          "maxTypeScale": 1.25,
+          "positiveSteps": 5,
+          "negativeSteps": 2,
+          "prefix": "scale-"
+  ));
 
-  // @each $clamp in $spacing-clamps {
-  //   --spacing-2: #{map.get($clamp, "clamp")};
-  // }
 
-  @for $i from 1 through length($spacing-clamps) {
-    $clamp: nth($spacing-clamps, $i);
+  @for $i from 1 through list.length($spacing-clamps) {
+    $clamp: list.nth($spacing-clamps, $i);
     --spacing-#{$i}: #{map.get($clamp, "clamp")};
   }
 
@@ -97,19 +99,15 @@ body {
   margin: 0;
 }
 
-body>* {
+body > * {
   grid-column: 2;
 }
 
-body>header>*:only-child {
+body > header > *:only-child {
   margin-block-start: 2rem;
 }
 
-main {
-  padding-top: 1.5rem;
-}
-
-body>footer {
+body > footer {
   margin-top: 4rem;
   padding: 2rem 1rem 1.5rem 1rem;
   color: var(--text-light);
@@ -118,19 +116,23 @@ body>footer {
   border-top: 1px solid var(--border);
 }
 
-/* Format headers */
+// Headers -------------------------------------------------------------------
+
 h1 {
-  font-size: var(--scale-4)
+  font-size: var(--scale-4);
+  font-weight: normal;
+  margin-bottom: var(--spacing-4);
+  color: var(--text-light);
 }
 
 h2 {
   font-size: var(--scale-3);
-  margin-top: var(--spacing-3)
+  margin: var(--spacing-3) 0 var(--spacing-2)
 }
 
 h3 {
   font-size: var(--scale-2);
-  margin-top: var(--spacing-2)
+  margin: var(--spacing-3) 0 var(--spacing-2)
 }
 
 h4 {
@@ -145,8 +147,8 @@ h6 {
   font-size: 0.96rem;
 }
 
-p, ul, ol {
-  margin: var(--spacing-1) 0;
+p, ul, ol, bloc {
+  margin: 0 0 var(--spacing-2);
 }
 
 p,
@@ -279,7 +281,6 @@ header nav a[aria-current="true"] {
   cursor: pointer;
 }
 
-article,
 fieldset,
 dialog {
   border: 1px solid var(--border);
@@ -288,34 +289,12 @@ dialog {
   margin-bottom: 1rem;
 }
 
-article h2:first-child,
-section h2:first-child,
-article h3:first-child,
-section h3:first-child {
-  margin-top: 1rem;
-}
-
-section {
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
+section, article {
   padding: var(--spacing-3) var(--spacing-2);
-  margin: 3rem 0;
 }
 
-/* Don't double separators when chaining sections */
-section+section,
-section:first-child {
-  border-top: 0;
+section + section {
   padding-top: 0;
-}
-
-section+section {
-  margin-top: 0;
-}
-
-section:last-child {
-  border-bottom: 0;
-  padding-bottom: 0;
 }
 
 details {
@@ -330,15 +309,15 @@ summary {
   word-break: break-all;
 }
 
-details[open]>summary+* {
+details[open] > summary + * {
   margin-top: 0;
 }
 
-details[open]>summary {
+details[open] > summary {
   margin-bottom: 0.5rem;
 }
 
-details[open]> :last-child {
+details[open] > :last-child {
   margin-bottom: 0;
 }
 
@@ -348,7 +327,7 @@ table {
   margin: 1.5rem 0;
 }
 
-figure>table {
+figure > table {
   width: max-content;
   margin: 0;
 }
@@ -410,7 +389,7 @@ textarea:not([cols]) {
 /* Add arrow to drop-down */
 select:not([multiple]) {
   background-image: linear-gradient(45deg, transparent 49%, var(--text) 51%),
-    linear-gradient(135deg, var(--text) 51%, transparent 49%);
+  linear-gradient(135deg, var(--text) 51%, transparent 49%);
   background-position: calc(100% - 15px), calc(100% - 10px);
   background-size: 5px 5px, 5px 5px;
   background-repeat: no-repeat;
@@ -429,8 +408,8 @@ input[type="radio"] {
   width: min-content;
 }
 
-input[type="checkbox"]+label,
-input[type="radio"]+label {
+input[type="checkbox"] + label,
+input[type="radio"] + label {
   display: inline-block;
 }
 
@@ -525,8 +504,8 @@ figure {
   overflow-x: auto;
 }
 
-figure>img,
-figure>picture>img {
+figure > img,
+figure > picture > img {
   display: block;
   margin-inline: auto;
 }
@@ -677,8 +656,7 @@ sub {
 // ---------------------------------------------------------------------------
 
 
-
-// Print 
+// Print
 
 @media print {
   @page {
@@ -689,12 +667,12 @@ sub {
     display: block;
   }
 
-  body>header {
+  body > header {
     background-color: unset;
   }
 
-  body>header nav,
-  body>footer {
+  body > header nav,
+  body > footer {
     display: none;
   }
 
